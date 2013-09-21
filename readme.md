@@ -8,6 +8,10 @@
 #开发语言
 * java
 
+#依赖包
+* lucene-core-3.1.0.jar 
+* lucene-spellchecker-3.1.0.jar
+
 #如何使用
 * java -jar proofread.jar
 
