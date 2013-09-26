@@ -23,7 +23,7 @@ public class SpellCorrecter {
 			sp = new SpellChecker(directory);
 			//sp = new SpellChecker(directory,ngram);
 			//第一次创建字典
-                        //File dictionary = new File(SpellCorrecter.class.getResource("pipimovieUTF8.txt").getFile());
+                        //File dictionary = new File(SpellCorrecter.class.getResource("dict.txt").getFile());
 			//对词典进行索引
 			//sp.indexDictionary(new PlainTextDictionary(dictionary));
 		} catch (IOException e){ 
@@ -44,7 +44,7 @@ public class SpellCorrecter {
 //	public static void main(String[] args) throws IOException {
 //
 //		//“错误”的搜索
-//		String movie = "天汽预报";
+//		String movie = "电视平到";
 //		 
 //
 //		//建议个数
@@ -57,7 +57,6 @@ public class SpellCorrecter {
 //
 //		//显示结果
 //		System.out.println("Your Term:" + movie);
-//		 #
 //
 //		for (String word : suggestions) {
 //			System.out.println("Did you mean:" + word);

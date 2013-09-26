@@ -1,0 +1,7 @@
+org.wltea.analyzer
+org.wltea.analyzer.cfg
+org.wltea.analyzer.dic
+org.wltea.analyzer.help
+org.wltea.analyzer.lucene
+org.wltea.analyzer.seg
+org.wltea.analyzer.solr
