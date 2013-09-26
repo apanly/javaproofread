@@ -15,6 +15,9 @@
 #如何使用
 * java -jar proofread.jar
 
+#参考资料
+* [lucene3.6.0的查询条件分析](http://blog.csdn.net/zhongweijian/article/details/7622693)
+
 #How to Contact
 ####QQ:36405410
 ####Email:apanly@163.com
