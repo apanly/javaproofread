@@ -18,6 +18,7 @@
 #参考资料
 * [lucene3.6.0的查询条件分析](http://blog.csdn.net/zhongweijian/article/details/7622693)
 * [MIK_CAnalyzer分词]
+* [Lucene进阶:and 和or的条件查询](http://lucene-group.group.iteye.com/group/wiki/466)
 
 #How to Contact
 ####QQ:36405410
