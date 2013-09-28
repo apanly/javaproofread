@@ -50,33 +50,35 @@ public class FileOperate {
         }
     }
 
-    private void update(){
+    private void update(Term term,Document doc){
          try {
             IndexWriterConfig config = new IndexWriterConfig(VERSION, ikAnalyzer);
             config.setOpenMode(OpenMode.CREATE);
             IndexWriter indexWriter = null;
             //使用IK中文分词器建立索引  
             indexWriter = new IndexWriter(FSDirectory.open(INDEXDIR), config);
-            Document doc1 = new Document();
-            doc1.add(new Field("id", "1", Store.YES, Index.ANALYZED));
-            doc1.add(new Field("name", "我是中国人", Store.YES, Index.ANALYZED));
-            doc1.add(new Field("content", "我是中国人", Store.YES, Index.ANALYZED));
-            indexWriter.updateDocument(new Term("id", "1"), doc1);
+//            Document doc1 = new Document();
+//            doc1.add(new Field("id", "1", Store.YES, Index.ANALYZED));
+//            doc1.add(new Field("name", "我是中国人", Store.YES, Index.ANALYZED));
+//            doc1.add(new Field("content", "我是中国人", Store.YES, Index.ANALYZED));
+//            indexWriter.updateDocument(new Term("id", "1"), doc1);
+            indexWriter.updateDocument(term,doc);
             indexWriter.commit();
             indexWriter.close();
          }catch(Exception e){
              e.printStackTrace();
          }
     }
-    private void delete(){
+    private void delete(Term term){
         try {
             IndexWriterConfig config = new IndexWriterConfig(VERSION, ikAnalyzer);
             config.setOpenMode(OpenMode.CREATE);
             IndexWriter indexWriter = null;
             //使用IK中文分词器建立索引  
             indexWriter = new IndexWriter(FSDirectory.open(INDEXDIR), config);
-            indexWriter.deleteDocuments(new Term("id", "1"));
-            indexWriter.deleteDocuments(new Term("id", "2"));
+            //indexWriter.deleteDocuments(new Term("id", "1"));
+            //indexWriter.deleteDocuments(new Term("id", "2"));
+            indexWriter.deleteDocuments(term);
             indexWriter.commit();
             indexWriter.close();
          }catch(Exception e){
@@ -86,6 +88,7 @@ public class FileOperate {
     
     public static void main(String[] args) {
         FileOperate lucene = new FileOperate();
-        lucene.createIndex();
+        //lucene.createIndex();
+        lucene.delete(new Term("desc", "天气预报"));
     }
 }

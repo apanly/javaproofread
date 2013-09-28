@@ -72,7 +72,7 @@ public class CmdSearcher {
    
 
     public static void main(String[] args) {
-        String word="中华人民共和国";
+        String word="今天的天气预报";
         StopAnalyzerChinese stopword=new StopAnalyzerChinese(word);
         List<String> filterword=stopword.RunStopWord();
         String words=stopword.listToString(filterword, " ");
