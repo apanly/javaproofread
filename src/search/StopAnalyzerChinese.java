@@ -17,13 +17,16 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.util.Version;
 import org.wltea.analyzer.lucene.IKAnalyzer;
+import org.apache.log4j.Logger;
 
 public class StopAnalyzerChinese {
 
     private String word;
+    private static Logger logger=Logger.getLogger(StopAnalyzerChinese.class);
 
     public StopAnalyzerChinese(String word) {
         this.word=word;
+        logger.debug(word);
     }
     
     public List RunStopWord(){
@@ -34,12 +37,13 @@ public class StopAnalyzerChinese {
     private List stopWord(){
          List<String> list = new ArrayList<String>();
         try {
-            Analyzer analyzer = new StopAnalyzer(Version.LUCENE_35, new File("stopword.dic"));
+            //Analyzer analyzer = new StopAnalyzer(Version.LUCENE_35, new File("stopword.dic"));
+            Analyzer analyzer = new StopAnalyzer(Version.LUCENE_35, new File(StopAnalyzerChinese.class.getResource("/stopword.dic").getFile()));
             TokenStream stream = analyzer.tokenStream("content", new StringReader(word));
             stream.addAttribute(CharTermAttribute.class);
             while (stream.incrementToken()) {
                 CharTermAttribute charTermAttribute = stream.getAttribute(CharTermAttribute.class);
-                //System.out.println(new String(charTermAttribute.toString()));
+                logger.debug(new String(charTermAttribute.toString()));
                 list.add(new String(charTermAttribute.toString()));
             }
         } catch (CorruptIndexException e) {
