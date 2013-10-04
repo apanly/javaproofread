@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 //import org.apache.lucene.search.spell.NGramDistance;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.IndexWriterConfig.OpenMode;
+import org.apache.lucene.search.spell.JaroWinklerDistance;
 import org.apache.lucene.search.spell.PlainTextDictionary;
 import org.apache.lucene.search.spell.SpellChecker;
 import org.apache.lucene.store.Directory;
@@ -23,6 +25,7 @@ public class SpellCorrecter {
 			 File dict = new File("./myindex");
 			 Directory directory = FSDirectory.open(dict);
                          IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_35, null);
+                         config.setOpenMode(OpenMode.CREATE_OR_APPEND);
 			//实例化拼写检查器
 			//NGramDistance ngram = new NGramDistance();
                         //sp = new SpellChecker(directory,ngram);
@@ -47,29 +50,20 @@ public class SpellCorrecter {
 	}
 	
 	
-
+//
 //	public static void main(String[] args) throws IOException {
 //
 //		//“错误”的搜索
-//		String movie = "把电视关了";
-//		 
-//
+//		String movie = "上一页";
 //		//建议个数
 //		final int suggestionNumber = 20;
-//		 
-//
 //		//获取建议的关键字
 //		String[] suggestions = SpellCorrecter.suggest(movie, suggestionNumber);
-//		 
-//
 //		//显示结果
 //		System.out.println("Your Term:" + movie);
-//
 //		for (String word : suggestions) {
 //			System.out.println("Did you mean:" + word);
 //		}
-//		 
-//
 //	}
 
 }

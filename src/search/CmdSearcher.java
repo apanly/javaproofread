@@ -90,9 +90,9 @@ public class CmdSearcher {
     }
 
    
-
+//
 //    public static void main(String[] args) {
-//        String word="天气预报";
+//        String word="下一页";
 //        StopAnalyzerChinese stopword=new StopAnalyzerChinese(word);
 //        List<String> filterword=stopword.RunStopWord();
 //        String words=stopword.listToString(filterword, " ");

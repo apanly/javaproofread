@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 public class JServer implements Runnable {
 
     ServerSocket ss;
-    private static Logger logger=Logger.getLogger(JServer.class);
+    private static Logger logger = Logger.getLogger(JServer.class);
 
     public JServer() throws Exception {
         ss = new ServerSocket(10000);
@@ -55,10 +55,10 @@ class Handler extends Thread {
 
     Socket s;
     int id;
-    private static Logger logger=Logger.getLogger(Handler.class);
+    private static Logger logger = Logger.getLogger(Handler.class);
 
     public Handler(Socket s, int id) {
-        
+
         this.s = s;
         this.id = id;
     }
@@ -70,21 +70,25 @@ class Handler extends Thread {
             BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             PrintWriter out = new PrintWriter(s.getOutputStream());
             String pythonword = in.readLine();
-            String[] suggestions =SpellCorrecter.suggest(pythonword, 1);
-            String word=pythonword;
-            if(suggestions.length>0){
-                word=suggestions[0];
-            }    
-            StopAnalyzerChinese stopword=new StopAnalyzerChinese(word);
-            List<String> filterword=stopword.RunStopWord();
-            String words=stopword.listToString(filterword, " ");
-            logger.debug(words);
-            CmdSearcher search = new CmdSearcher();
-            String[] result=search.search(new String[]{"desc"}, words, 0, 1);  //,1,10);可以翻页
-            logger.debug(result.length);
-            if(result[0]!=null){
-                out.write(result[0]);
-            }else{
+            String cmdinfo = this.searchcmd(pythonword);
+            if (cmdinfo.equals("")) {
+                String[] suggestions = SpellCorrecter.suggest(pythonword, 1);
+                String word = pythonword;
+                if (suggestions.length > 0) {
+                    word = suggestions[0];
+                }
+                cmdinfo = this.searchcmd(pythonword);
+            }
+            String[] suggestions = SpellCorrecter.suggest(pythonword, 1);
+            String word = pythonword;
+            if (suggestions.length > 0) {
+                word = suggestions[0];
+            }
+            
+            if (!cmdinfo.equals("")) {
+                out.write(cmdinfo);
+            } else {
+
                 out.write("n,default,http://www.baidu.com,browser");
             }
             out.flush();
@@ -92,5 +96,20 @@ class Handler extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private String searchcmd(String word) {
+        String returnval = "";
+        StopAnalyzerChinese stopword = new StopAnalyzerChinese(word);
+        List<String> filterword = stopword.RunStopWord();
+        String words = stopword.listToString(filterword, " ");
+        logger.debug(words);
+        CmdSearcher search = new CmdSearcher();
+        String[] result = search.search(new String[]{"desc"}, words, 0, 1);  //,1,10);可以翻页
+        logger.debug(result.length);
+        if (result[0] != null) {
+            returnval = result[0];
+        }
+        return returnval;
     }
 }

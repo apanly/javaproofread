@@ -37,7 +37,7 @@ public class FileOperate {
     public FileOperate() {
         try {
             IndexWriterConfig config = new IndexWriterConfig(VERSION, ikAnalyzer);
-            config.setOpenMode(OpenMode.CREATE);
+            config.setOpenMode(OpenMode.CREATE_OR_APPEND);
             //使用IK中文分词器建立索引  
             indexWriter = new IndexWriter(FSDirectory.open(INDEXDIR), config);
             System.out.println("一共有" + indexWriter.maxDoc() + "索引");
@@ -85,39 +85,49 @@ public class FileOperate {
             e.printStackTrace();
         }
     }
-    /**
-     * 初始化命令
-     * id   desc  cmd  type
-     * @param args 
-     */
-    public static void main(String[] args) {
-        FileOperate lucene = new FileOperate();
-        
-        try {
-            String tmparray[] = new String[3];
-            FileReader reader = new FileReader(FileOperate.class.getResource("/cmd.dic").getFile());
-            BufferedReader br = new BufferedReader(reader);
-            String str = null;
-            int number=1;
-            Document doc = new Document();
-            while ((str = br.readLine()) != null) {
-                tmparray=str.split("\\s{1,}");
-                doc.add(new Field("id",String.valueOf(number), Store.YES, Index.ANALYZED));
-                doc.add(new Field("desc",tmparray[0], Store.YES, Index.ANALYZED));
-                doc.add(new Field("cmd", tmparray[1], Store.YES, Index.ANALYZED));
-                doc.add(new Field("type", tmparray[2], Store.YES, Index.ANALYZED));
-                lucene.addIndex(doc);
-                doc=new Document();
-                number++;
-            }
-            br.close();
-            reader.close();
-            lucene.submit();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    /**
+//     * 初始化命令
+//     * id   desc  cmd  type
+//     * @param args 
+//     */
+//    public static void main(String[] args) {
+//        FileOperate lucene = new FileOperate();
+//        
+//        try {
+//            String tmparray[] = new String[3];
+//            FileReader reader = new FileReader(FileOperate.class.getResource("/cmd.dic").getFile());
+//            BufferedReader br = new BufferedReader(reader);
+//            String str = null;
+//            int number=1;
+//            Document doc = new Document();
+//            while ((str = br.readLine()) != null) {
+//                tmparray=str.split("\\s{1,}");
+//                doc.add(new Field("id",String.valueOf(number), Store.YES, Index.ANALYZED));
+//                doc.add(new Field("desc",tmparray[0], Store.YES, Index.ANALYZED));
+//                doc.add(new Field("cmd", tmparray[1], Store.YES, Index.ANALYZED));
+//                doc.add(new Field("type", tmparray[2], Store.YES, Index.ANALYZED));
+//                lucene.addIndex(doc);
+//                doc=new Document();
+//                number++;
+//            }
+//            br.close();
+//            reader.close();
+//            lucene.submit();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//   public static void main(String[] args){
+//        FileOperate lucene = new FileOperate();
+//        Document doc=new Document();
+//        doc.add(new Field("id","34", Store.YES, Index.ANALYZED));
+//        doc.add(new Field("desc","幻灯片", Store.YES, Index.ANALYZED));
+//        doc.add(new Field("cmd", "next", Store.YES, Index.ANALYZED));
+//        doc.add(new Field("type", "ppt", Store.YES, Index.ANALYZED));
+//        lucene.addIndex(doc);
+//        lucene.submit();
+//    }
 }
